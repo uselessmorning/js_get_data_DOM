@@ -1,7 +1,7 @@
 'use strict';
 
 // write your code here
-const population = document.querySelectorAll('.population');
+const population = document.querySelectorAll('span.population');
 const averageField = document.querySelector('.average-population');
 const totalField = document.querySelector('.total-population');
 
@@ -9,13 +9,17 @@ let total = 0;
 const counts = [];
 
 population.forEach((el) => {
-  const number = Number(el.textContent.replaceAll(',', ''));
+  const value = Number(el.textContent.replace(/,/g, ''));
 
-  total += number;
-  counts.push(number);
+  if (Number.isFinite(value)) {
+    total += value;
+    counts.push(value);
+  }
 });
 
-const average = total / counts.length;
+if (counts.length > 0) {
+  const average = total / counts.length;
 
-totalField.textContent = total.toLocaleString('en-US');
-averageField.textContent = average.toLocaleString('en-US');
+  totalField.textContent = total.toLocaleString('en-US');
+  averageField.textContent = average.toLocaleString('en-US');
+}
